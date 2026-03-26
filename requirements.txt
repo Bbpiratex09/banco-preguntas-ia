@@ -1,0 +1,16 @@
+# ── Core ─────────────────────────────────────────────────────────
+torch>=2.0.0
+sentence-transformers>=2.7.0
+pandas>=2.0.0
+
+# ── NLP / Traducción ─────────────────────────────────────────────
+deep-translator>=1.11.0
+langdetect>=1.0.9
+
+# ── Imágenes / OCR ───────────────────────────────────────────────
+Pillow>=10.0.0
+pytesseract>=0.3.10
+requests>=2.31.0
+
+# ── NOTA: pywin32 solo es necesario en Windows ───────────────────
+# pywin32>=306
