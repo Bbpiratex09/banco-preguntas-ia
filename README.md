@@ -6,7 +6,7 @@ Aplicación de escritorio en Python que permite buscar respuestas a preguntas de
 
 ## 📸 Demo
 
-> La app detecta tu pregunta —ya sea escrita o pegada como imagen— y encuentra la coincidencia más cercana en tu banco de preguntas JSON, mostrando la respuesta correcta, opciones e implicación.
+> La app detecta tu pregunta, la compara contra un examen HTML local y muestra la coincidencia más cercana con su respuesta correcta, opciones, explicación e imágenes.
 
 ---
 
@@ -16,6 +16,7 @@ Aplicación de escritorio en Python que permite buscar respuestas a preguntas de
 - 🌐 **Soporte multilingüe**: detecta el idioma de la pregunta y la traduce al inglés automáticamente para mejorar los resultados
 - 📸 **OCR integrado**: pega una captura de pantalla o carga una imagen, y extrae el texto automáticamente con Tesseract
 - 🖼️ **Imágenes de respuesta**: muestra imágenes asociadas a preguntas y explicaciones directamente en la UI
+- 📄 **Banco desde HTML**: extrae preguntas, opciones, respuestas e imágenes directamente desde un archivo HTML de examen
 - ⚡ **Embeddings en lote**: calcula todos los vectores del banco al inicio para búsquedas rápidas en tiempo real
 
 ---
@@ -28,7 +29,8 @@ banco_preguntas_app/
 ├── search_engine.py     # Motor de búsqueda semántica
 ├── config.py            # Configuración centralizada
 ├── requirements.txt     # Dependencias del proyecto
-├── ejemplo_banco.json   # Ejemplo del formato esperado para el banco
+├── EXAM-AZ700.html      # Fuente principal de preguntas en HTML
+├── ejemplo_banco.json   # Ejemplo del esquema interno reconstruido por el parser
 ├── .gitignore
 └── README.md
 ```
@@ -70,11 +72,13 @@ pip install -r requirements.txt
 
 ### 4. Preparar el banco de preguntas
 
-Coloca tu archivo `banco_preguntas.json` en la raíz del proyecto. Consulta `ejemplo_banco.json` para ver el formato esperado.
+Coloca tu archivo HTML del examen en la raíz del proyecto. Por defecto la app leerá `EXAM-AZ700.html`.
 
 ---
 
-## 📄 Formato del banco de preguntas (`banco_preguntas.json`)
+## 📄 Fuente del banco (`EXAM-AZ700.html`)
+
+La aplicación ya no depende directamente de `banco_preguntas.json`. Ahora parsea el HTML del examen y reconstruye internamente este esquema:
 
 ```json
 [
@@ -96,6 +100,8 @@ Coloca tu archivo `banco_preguntas.json` en la raíz del proyecto. Consulta `eje
   }
 ]
 ```
+
+Este esquema sigue siendo útil como referencia, pero ahora se genera a partir del HTML.
 
 ---
 
@@ -119,7 +125,8 @@ python app.py
 | Parámetro | Descripción | Valor por defecto |
 |---|---|---|
 | `TESSERACT_CMD` | Ruta al ejecutable de Tesseract | Auto (según SO) |
-| `BANCO_JSON` | Ruta al archivo JSON del banco | `banco_preguntas.json` |
+| `BANCO_HTML` | Ruta al archivo HTML del examen | `EXAM-AZ700.html` |
+| `HTML_BASE_URL` | URL base para resolver imágenes relativas del HTML | `https://www.examtopics.com/` |
 | `MODELO_NOMBRE` | Modelo de sentence-transformers | `all-MiniLM-L6-v2` |
 | `SIMILARITY_THRESHOLD` | Umbral mínimo de similitud | `0.75` |
 | `BATCH_SIZE` | Tamaño de lote para embeddings | `64` |
@@ -135,6 +142,7 @@ python app.py
 | `deep-translator` | Traducción automática |
 | `langdetect` | Detección de idioma |
 | `pytesseract` + `Pillow` | OCR e imágenes |
+| `beautifulsoup4` | Parseo del examen HTML |
 | `pandas` | Manejo del banco de datos |
 
 ---

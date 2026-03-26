@@ -18,7 +18,8 @@ class AppConfig:
     )
 
     # ── Datos ────────────────────────────────────────────────────
-    BANCO_JSON: Path = Path("banco_preguntas.json")
+    BANCO_HTML: Path = Path("EXAM-AZ700.html")
+    HTML_BASE_URL: str = "https://www.examtopics.com/"
 
     # ── Modelo de embeddings ─────────────────────────────────────
     MODELO_NOMBRE: str = "all-MiniLM-L6-v2"
