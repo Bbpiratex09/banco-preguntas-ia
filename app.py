@@ -253,7 +253,7 @@ class BancoPreguntasApp:
 # 🚀 ENTRY POINT
 # =========================================
 def main():
-    logger.info("🧠 Iniciando Banco de Preguntas IA...")
+    logger.info("Iniciando Banco de Preguntas IA...")
     engine = SearchEngine()
     root = tk.Tk()
     app = BancoPreguntasApp(root, engine)

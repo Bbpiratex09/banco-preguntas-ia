@@ -32,15 +32,15 @@ class SearchEngine:
     def __init__(self):
         pytesseract.pytesseract.tesseract_cmd = AppConfig.TESSERACT_CMD
 
-        logger.info("🧠 Cargando modelo de embeddings...")
+        logger.info("Cargando modelo de embeddings...")
         self.modelo = SentenceTransformer(AppConfig.MODELO_NOMBRE)
 
-        logger.info("📂 Cargando banco de preguntas...")
+        logger.info("Cargando banco de preguntas...")
         self.df = self._cargar_banco()
 
-        logger.info("🧮 Preparando embeddings...")
+        logger.info("Preparando embeddings...")
         self._preparar_embeddings()
-        logger.info("✅ Motor listo.")
+        logger.info("Motor listo.")
 
     # ─────────────────────────────────────────────────────────────
     # Inicialización
