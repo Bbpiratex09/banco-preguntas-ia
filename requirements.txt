@@ -13,5 +13,5 @@ pytesseract>=0.3.10
 requests>=2.31.0
 beautifulsoup4>=4.12.0
 
-# ── NOTA: pywin32 solo es necesario en Windows ───────────────────
-# pywin32>=306
+# ── Windows / Portapapeles ───────────────────────────────────────
+pywin32>=306; platform_system == "Windows"
