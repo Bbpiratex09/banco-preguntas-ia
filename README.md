@@ -6,7 +6,7 @@ Aplicación de escritorio en Python que permite buscar respuestas a preguntas de
 
 ## 📸 Demo
 
-> La app detecta tu pregunta, la compara contra un examen HTML local y muestra la coincidencia más cercana con su respuesta correcta, opciones, explicación e imágenes.
+> La app detecta tu pregunta, permite pegar capturas en la caja, procesa OCR al buscar y muestra la coincidencia más cercana respetando el orden visual del HTML original.
 
 ---
 
@@ -14,9 +14,10 @@ Aplicación de escritorio en Python que permite buscar respuestas a preguntas de
 
 - 🔍 **Búsqueda semántica** usando `sentence-transformers` (modelo `all-MiniLM-L6-v2`)
 - 🌐 **Soporte multilingüe**: detecta el idioma de la pregunta y la traduce al inglés automáticamente para mejorar los resultados
-- 📸 **OCR integrado**: pega una captura de pantalla o carga una imagen, y extrae el texto automáticamente con Tesseract
+- 📸 **OCR diferido**: pega una captura de pantalla o carga una imagen y procesa el OCR al momento de buscar
 - 🖼️ **Imágenes de respuesta**: muestra imágenes asociadas a preguntas y explicaciones directamente en la UI
 - 📄 **Banco desde HTML**: extrae preguntas, opciones, respuestas e imágenes directamente desde un archivo HTML de examen
+- 🧩 **Render visual fiel**: reconstruye la pregunta usando `pregunta_html` para respetar el orden original de texto e imágenes
 - ⚡ **Embeddings en lote**: calcula todos los vectores del banco al inicio para búsquedas rápidas en tiempo real
 
 ---
@@ -114,9 +115,12 @@ python app.py
 | Acción | Descripción |
 |---|---|
 | Escribir pregunta | Escribe o pega texto en la caja principal y pulsa **Buscar** |
-| `Ctrl + V` con imagen | Si el portapapeles contiene una captura, OCR extrae el texto automáticamente |
-| Botón **Cargar Imagen** | Abre un explorador para seleccionar una imagen local |
+| `Ctrl + V` con imagen | Si el portapapeles contiene una captura o imagen compatible, se inserta una vista previa en la caja |
+| Botón **Cargar Imagen** | Abre un explorador para seleccionar una imagen local y la inserta como vista previa |
+| Botón **Buscar** con imagen | Ejecuta OCR sobre la imagen pendiente y luego realiza la búsqueda semántica |
 | Botón **Limpiar** | Borra la pregunta y el resultado actual |
+
+> En Windows, la app maneja variantes comunes del pegado por teclado para que el portapapeles responda de forma consistente al usar `Ctrl + V`.
 
 ---
 

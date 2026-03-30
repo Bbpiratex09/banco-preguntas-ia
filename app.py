@@ -284,6 +284,9 @@ class BancoPreguntasApp:
         )
         self.caja_texto.pack(fill="x", padx=12, pady=6)
         self.caja_texto.bind("<Control-v>", self._evento_pegar)
+        self.caja_texto.bind("<Control-V>", self._evento_pegar)
+        self.caja_texto.bind("<Control-Shift-v>", self._evento_pegar)
+        self.caja_texto.bind("<Control-Shift-V>", self._evento_pegar)
 
         # Botones
         frame_botones = tk.Frame(self.root, bg=AppConfig.BG_COLOR)
@@ -377,13 +380,17 @@ class BancoPreguntasApp:
             f"✅ Coincidencia ({mejor['similaridad']:.2f})",
             font=("Segoe UI", 12, "bold"), fg="#006400"
         )
-        label(f"\n{mejor['pregunta']}", font=("Segoe UI", 11))
 
-        # Imagen de pregunta
-        if isinstance(mejor.get("pregunta_html"), list):
-            for item in mejor["pregunta_html"]:
-                if item.get("tipo") == "imagen":
+        bloques_pregunta = mejor.get("pregunta_html")
+        if isinstance(bloques_pregunta, list) and bloques_pregunta:
+            tk.Frame(self.frame_resultado, height=8, bg="#ffffff").pack(anchor="w")
+            for item in bloques_pregunta:
+                if item.get("tipo") == "texto" and item.get("contenido"):
+                    label(item["contenido"], font=("Segoe UI", 11))
+                elif item.get("tipo") == "imagen" and item.get("url"):
                     mostrar_imagen(item["url"], self.frame_resultado)
+        else:
+            label(f"\n{mejor['pregunta']}", font=("Segoe UI", 11))
 
         # Opciones
         if isinstance(mejor.get("opciones"), dict) and mejor["opciones"]:
